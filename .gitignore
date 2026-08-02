@@ -1,0 +1,33 @@
+.terraform/
+
+*.tfstate
+*.tfstate.*
+
+crash.log
+crash.*.log
+
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+.terraformrc
+terraform.rc
+
+*.tfvars
+*.tfvars.json
+
+*.tfplan
+plan.out
+
+# Lock file
+# Comente esta linha caso queira versionar o lock file (recomendado)
+ .terraform.lock.hcl
+
+.vscode/
+.idea/
+
+.DS_Store
+Thumbs.db
+
+*.log
