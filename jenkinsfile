@@ -1,8 +1,7 @@
 pipeline {
-
     agent any
-    stages {
 
+    stages {
         stage('Checkout') {
             steps {
                 checkout scm
@@ -11,38 +10,45 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                sh """
-                cd terraform
+                sh '''
                 terraform init
-                """
+                '''
+            }
+        }
+
+        stage('Terraform Format') {
+            steps {
+                sh '''
+                terraform fmt -check
+                '''
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                sh '''
+                terraform validate
+                '''
             }
         }
 
         stage('Terraform Plan') {
-
-            when {
-                branch 'PR-*'
-            }
-
             steps {
-                sh """
-                cd terraform
+                sh '''
                 terraform plan
-                """
+                '''
             }
         }
 
         stage('Terraform Apply') {
-
             when {
                 branch 'main'
             }
 
             steps {
-                sh """
-                cd terraform
+                sh '''
                 terraform apply -auto-approve
-                """
+                '''
             }
         }
     }
