@@ -4,7 +4,7 @@ resource "aws_lambda_function" "lambda" {
   package_type = "Image"
   image_uri = "942752162036.dkr.ecr.us-east-1.amazonaws.com/python-dummy:latest"
   role = aws_iam_role.lambda_role.arn
-  timeout = 30
+  timeout = 60
   memory_size = 256
 
   architectures = [
