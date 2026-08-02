@@ -1,0 +1,49 @@
+pipeline {
+
+    agent any
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                sh """
+                cd terraform
+                terraform init
+                """
+            }
+        }
+
+        stage('Terraform Plan') {
+
+            when {
+                branch 'PR-*'
+            }
+
+            steps {
+                sh """
+                cd terraform
+                terraform plan
+                """
+            }
+        }
+
+        stage('Terraform Apply') {
+
+            when {
+                branch 'main'
+            }
+
+            steps {
+                sh """
+                cd terraform
+                terraform apply -auto-approve
+                """
+            }
+        }
+    }
+}
